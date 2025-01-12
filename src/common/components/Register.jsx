@@ -12,7 +12,7 @@ const Register = () => {
   });
 
   const [errors, setErrors] = useState({});
-  const [verified, setVerified] = useState(false);
+  // const [verified, setVerified] = useState(false);
   const [registerUser, { isLoading, isError, error, isSuccess, data }] =  useRegisterUserMutation();
   const navigate = useNavigate();
   const handleInputChange = (e) => {
@@ -36,10 +36,10 @@ const Register = () => {
       validationErrors.confirmPassword = "Passwords do not match";
     }
 
-    if (!verified) {
-      console.log("Please verify the CAPTCHA");
-      validationErrors.recaptcha = "Please Verify the Captcha";
-    }
+    // if (!verified) {
+    //   console.log("Please verify the CAPTCHA");
+    //   validationErrors.recaptcha = "Please Verify the Captcha";
+    // }
 
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
@@ -48,10 +48,10 @@ const Register = () => {
     registerUser(formData);
   };
 
-  const onChange = (value) => {
-    console.log("Captcha value:", value);
-    setVerified(true);
-  };
+  // const onChange = (value) => {
+  //   console.log("Captcha value:", value);
+  //   setVerified(true);
+  // };
 
   useEffect(() => {
     if (isError && error) {
@@ -126,13 +126,13 @@ const Register = () => {
           )}
         </div>
         <div className="mb-4 flex flex-col items-start">
-          <ReCAPTCHA
+          {/* <ReCAPTCHA
             sitekey="6Lcg-qsqAAAAAFnSuLxrec8J4UxSkZ1ibuf734e0"
             onChange={onChange}
-          />
-          {errors.recaptcha && (
+          /> */}
+          {/* {errors.recaptcha && (
             <span className="text-red-500">{errors.recaptcha}</span>
-          )}
+          )} */}
         </div>
         <button
           type="submit"
