@@ -1,5 +1,10 @@
-[build] environment = { NODE_VERSION = "20.18.0" }
+[build]
+  command = "npm run build"
+
+[build.environment]
+  NODE_VERSION = "20.18.0"
+
 [[redirects]]
-from='/*'
-to='index.html'
-status=200
+  from = "/*"
+  to = "/index.html"
+  status = 200
