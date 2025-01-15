@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import leftImage from "../assets/voting.jpg";
 import rightImage from "../assets/VotingRightImage.jpg";
 
-const VoteToCandidate = () => {
+const VotingMachine = () => {
   const [selectedCandidate, setSelectedCandidate] = useState(null);
   const [showDialog, setShowDialog] = useState(false);
   const user = useSelector(selectCurrentUser);
@@ -42,14 +42,22 @@ const VoteToCandidate = () => {
   };
 
   return (
-    <div className="flex flex-col py-10 px-10 bg-gray-100 min-h-screen gap-10">
-      <h2 className="text-4xl font-bold mb-6 text-center">Voting Machine</h2>
-      <div className="flex ">
+    <div className="flex flex-col py-6 px-4 bg-gray-100 min-h-screen gap-8">
+      <h2 className="text-2xl md:text-4xl font-bold mb-4 text-center">Voting Machine</h2>
+      <div className="flex flex-col md:flex-row gap-4 items-center justify-center">
         {/* Left Side Image */}
-        <div className="relative w-[30%] h-screen rounded-l-xl"> <img src={leftImage} alt="Left Side" className="absolute inset-0 w-full h-full object-fit rounded-l-xl" /> <div className="absolute inset-0 bg-black bg-opacity-40 rounded-l-xl"></div> </div>
-        <div className="w-full max-w-2xl bg-white p-6">
+        <div className="relative w-full md:w-1/3 h-60 md:h-screen rounded-xl overflow-hidden">
+          <img
+            src={leftImage}
+            alt="Left Side"
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-black bg-opacity-40"></div>
+        </div>
+
+        <div className="w-full md:w-1/3 bg-white p-4 md:p-6 shadow-lg rounded-lg">
           {candidate?.data ? (
-            <table className="min-w-full table-fixed border-collapse">
+            <table className="w-full table-fixed border-collapse text-sm md:text-base">
               <thead>
                 <tr className="bg-gray-800 text-white">
                   <th className="w-1/4 p-2">Symbol</th>
@@ -62,23 +70,27 @@ const VoteToCandidate = () => {
                 {candidate?.data?.map((candidate) => (
                   <tr
                     key={candidate._id}
-                    className={`text-center ${
+                    className={`text-center border-b ${
                       selectedCandidate === candidate._id
                         ? "bg-green-200"
                         : "bg-white"
                     }`}
                   >
                     <td className="p-2">
-                      <img src={candidate.electionSymbol} />
+                      <img
+                        src={candidate.electionSymbol}
+                        alt="Symbol"
+                        className="w-10 h-10 mx-auto"
+                      />
                     </td>
                     <td className="p-2">{candidate.candidatename}</td>
                     <td className="p-2">{candidate.party}</td>
                     <td className="p-2">
                       <button
-                        className={`px-4 py-2 rounded-lg ${
+                        className={`px-4 py-2 rounded-lg text-white ${
                           selectedCandidate === candidate._id
-                            ? "bg-green-500 text-white"
-                            : "bg-blue-500 text-white"
+                            ? "bg-green-500"
+                            : "bg-blue-500"
                         }`}
                         onClick={() => handleVote(candidate)}
                       >
@@ -93,22 +105,32 @@ const VoteToCandidate = () => {
             <p>{error?.data?.message}</p>
           )}
           {error?.data?.message === "Please Register for vote!" && (
-            <Link to="/register-form">Regiter</Link>
+            <Link to="/register-form" className="text-blue-500 underline">
+              Register
+            </Link>
           )}
         </div>
-        <div className="relative w-[30%] h-screen rounded-l-xl"> <img src={rightImage} alt="Left Side" className="absolute inset-0 w-full h-full object-fit rounded-r-xl" /> <div className="absolute inset-0 bg-black bg-opacity-40 rounded-l-xl"></div> </div>
+
+        <div className="relative w-full md:w-1/3 h-60 md:h-screen rounded-xl overflow-hidden">
+          <img
+            src={rightImage}
+            alt="Right Side"
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-black bg-opacity-40"></div>
+        </div>
       </div>
+
       {showDialog && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg">
-            <h3 className="text-lg mb-4">Confirm Your Vote</h3>
-            <p>
-              Are you sure you want to vote for:
-              {selectedCandidate.candidatename}?
+          <div className="bg-white p-4 md:p-6 rounded-lg shadow-lg">
+            <h3 className="text-lg md:text-xl mb-4">Confirm Your Vote</h3>
+            <p className="text-sm md:text-base">
+              Are you sure you want to vote for: {selectedCandidate.candidatename}?
             </p>
-            <div className="flex justify-end mt-4">
+            <div className="flex justify-end mt-4 gap-2">
               <button
-                className="px-4 py-2 bg-red-500 text-white rounded-lg mr-2"
+                className="px-4 py-2 bg-red-500 text-white rounded-lg"
                 onClick={() => setShowDialog(false)}
               >
                 Cancel
@@ -127,4 +149,4 @@ const VoteToCandidate = () => {
   );
 };
 
-export default VoteToCandidate;
+export default VotingMachine;

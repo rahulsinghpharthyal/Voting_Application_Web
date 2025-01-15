@@ -14,7 +14,6 @@ import MainHome from "./pages/MainHome";
 import ElectionManagementPage from "./pages/ElectionManagementPage";
 import MediaAndPublication from "./pages/MediaAndPublication";
 import VoterEducationPage from "./pages/VoterEducationPage";
-import CandidateViewToUser from "./pages/CandidateViewToUser";
 import SignupAndLogin from "./common/pages/SignupAndLogin";
 import ViewCandidateResult from "./pages/ViewCandidatesResult";
 import { useAuthenticateQuery } from "./features/authenticate/authenticateApiSlice";
@@ -22,6 +21,7 @@ import NotAuthorized from "./common/pages/NotAuthorized";
 import PageNotFound from "./common/pages/PageNotFound";
 import RegistrationForVoteForm from "./pages/RegisterForVoteForm";
 import RegistrationPage from "./pages/RegistraionPage";
+import VoteToCandidate from "./pages/VoteToCandidate";
 
 const App = () => {
   useAuthenticateQuery();
@@ -49,7 +49,7 @@ const App = () => {
             <Route path="register-form" element={<RegistrationForVoteForm />} />
             <Route path="profile" element={<VoterProfile />} />
             <Route path="candidate-result" element={<ViewCandidateResult />} />
-            <Route path="vote" element={<CandidateViewToUser />} />
+            <Route path="vote" element={<VoteToCandidate />} />
           </Route>
         </Route>
 

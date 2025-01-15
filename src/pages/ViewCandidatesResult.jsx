@@ -9,7 +9,7 @@ const ViewCandidateResult = () => {
   // Sort candidates by votesReceived in descending order
   const sortedCandidates = candidates?.Data?.slice().sort((a, b) => b.votesReceived - a.votesReceived);
   return (
-    <div className="container mx-auto p-4">
+    <div className="container mx-auto p-4 bg-gray-200 max-w-full">
       <header className="mb-4">
         <h1 className="text-4xl font-bold text-center">Election Results</h1>
       </header>

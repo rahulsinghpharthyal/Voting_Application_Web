@@ -3,7 +3,7 @@ import ElectionManagment from '../components/ElectionManagment'
 
 const ElectionManagementPage = () => {
   return (
-    <div className='bg-[#ef444434]'>
+    <div className='bg-gray-200'>
       <ElectionManagment/>
     </div>
   )
