@@ -11,33 +11,42 @@ import VoterLayout from "./pages/VoterLayout";
 import Candidates from "./pages/Candidates";
 import VoterProfile from "./pages/VoterProfile";
 import MainHome from "./pages/MainHome";
-import RegistrationCard from "./components/RegistrationCard";
 import ElectionManagementPage from "./pages/ElectionManagementPage";
 import MediaAndPublication from "./pages/MediaAndPublication";
 import VoterEducationPage from "./pages/VoterEducationPage";
 import CandidateViewToUser from "./pages/CandidateViewToUser";
-import RegisterForVote from "./pages/RegisterForVote";
 import SignupAndLogin from "./common/pages/SignupAndLogin";
 import ViewCandidateResult from "./pages/ViewCandidatesResult";
+import { useAuthenticateQuery } from "./features/authenticate/authenticateApiSlice";
+import NotAuthorized from "./common/pages/NotAuthorized";
+import PageNotFound from "./common/pages/PageNotFound";
+import RegistrationForVoteForm from "./pages/RegisterForVoteForm";
+import RegistrationPage from "./pages/RegistraionPage";
 
 const App = () => {
+  useAuthenticateQuery();
+
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/login" element={<SignupAndLogin />} />
         <Route path="/signup" element={<SignupAndLogin />} />
-        <Route element={<RequireAuth allowedRole={["admin", "voter"]} />}>
-          <Route element={<VoterLayout />}>
-            <Route path="/" element={<MainHome />} />
-            <Route path="candidates-list" element={<Candidates />} />
-            <Route path="register" element={<RegistrationCard />} />
-            <Route
-              path="election-managment"
-              element={<ElectionManagementPage />}
-            />
-            <Route path="voter-education" element={<VoterEducationPage />} />
-            <Route path="media&publication" element={<MediaAndPublication />} />
-            <Route path="register-form" element={<RegisterForVote />} />
+        <Route path="/forgot-password" element={<SignupAndLogin/>} />
+        <Route path="/reset-password" element={<SignupAndLogin/>} />
+        <Route path="/not-authorized" element={<NotAuthorized/>}/>
+        <Route path="/*" element={<PageNotFound/>}/>
+        <Route element={<VoterLayout />}>
+          <Route path="/" element={<MainHome />} />
+          <Route path="candidates-list" element={<Candidates />} />
+          <Route path="register" element={<RegistrationPage />} />
+          <Route
+            path="election-management"
+            element={<ElectionManagementPage />}
+          />
+          <Route path="voter-education" element={<VoterEducationPage />} />
+          <Route path="media&publication" element={<MediaAndPublication />} />
+          <Route element={<RequireAuth allowedRole={["admin", "voter"]} />}>
+            <Route path="register-form" element={<RegistrationForVoteForm />} />
             <Route path="profile" element={<VoterProfile />} />
             <Route path="candidate-result" element={<ViewCandidateResult />} />
             <Route path="vote" element={<CandidateViewToUser />} />

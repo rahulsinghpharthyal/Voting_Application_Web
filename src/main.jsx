@@ -22,6 +22,7 @@ createRoot(document.getElementById("app")).render(
         draggable
         pauseOnHover
         theme="dark"
+        className="max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl"
       />
       <App />
     </Provider>

@@ -6,6 +6,16 @@ import { Link } from "react-router-dom";
 
 const FullScreenMenu = ({ isMenuOpen, setIsMenuOpen }) => {
   const user = useSelector(selectCurrentUser);
+  const links = [
+    { id: 1, name: "Home", url: "/" },
+    { id: 2, name: "Political Parties & Candidates", url: "/candidates-list" },
+    { id: 3, name: "Voter Education", url: "/voter-education" },
+    { id: 4, name: "Register", url: "/register" },
+    { id: 5, name: "Media & Publications", url: "/media&publication" },
+    { id: 6, name: "Election Management", url: "/election-management" },
+    { id: 7, name: "Vote", url: "/vote" },
+    { id: 8, name: "Result", url: "/candidate-result" },
+  ];
   return (
     <>
       {isMenuOpen && (
@@ -18,19 +28,22 @@ const FullScreenMenu = ({ isMenuOpen, setIsMenuOpen }) => {
           </button>
           <div className="text-white text-center">
             <ul className="space-y-4">
-              {user?.role === 'admin' && (
-                <li>
+              {user?.role === "admin" && (
+                <li onClick={()=>setIsMenuOpen(!isMenuOpen)}>
                   <Link to="/dashboard" className="text-2xl">
                     Dashboard
                   </Link>
                 </li>
               )}
-              <li>
-                <Link to="#voters" className="text-2xl">
-                  Voters
-                </Link>
-              </li>
-              <li>
+              {links &&
+                links.map((link, index) => (
+                  <li onClick={()=>setIsMenuOpen(!isMenuOpen)}key={index}>
+                    <Link to={link.url} className="text-2xl">
+                      {link.name}
+                    </Link>
+                  </li>
+                ))}
+              {/* <li>
                 <Link to="#candidates" className="text-2xl">
                   Candidates
                 </Link>
@@ -44,7 +57,7 @@ const FullScreenMenu = ({ isMenuOpen, setIsMenuOpen }) => {
                 <Link to="#media" className="text-2xl">
                   Media & Publication
                 </Link>
-              </li>
+              </li> */}
             </ul>
           </div>
         </div>

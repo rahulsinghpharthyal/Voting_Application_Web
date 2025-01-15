@@ -5,7 +5,7 @@ import { selectCurrentUser } from "../features/auth/authSlice";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
-const RegisterForVote = () => {
+const RegistrationForVoteForm = () => {
   const [formData, setFormData] = useState({
     name: "",
     aadharNo: "",
@@ -169,4 +169,4 @@ const RegisterForVote = () => {
   );
 };
 
-export default RegisterForVote;
+export default RegistrationForVoteForm;

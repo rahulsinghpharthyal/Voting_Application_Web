@@ -7,46 +7,50 @@ import img5 from "../../assets/voting-day-banner-05.jpg";
 
 const VotingImageComponent = () => {
   return (
-    <div className="flex justify-center mt-5">
-      <div className="w-full p-2">
+    <div className="flex flex-wrap justify-center gap-4 mt-5">
+      {/* Image 1 */}
+      <div className="w-full md:w-[48%] lg:w-[32%] p-2">
         <img
           src={img1}
           alt="Government Building"
-          className="max-w-[680px] h-auto rounded-lg shadow-md"
+          className="w-full h-auto rounded-lg shadow-md"
         />
       </div>
-      <div className="h-96">
-        <div className="w-full p-2">
-          <img
-            src={img2}
-            alt="Historical Election Map"
-            className="w-full rounded-lg shadow-md"
-          />
-        </div>
-        <div className="w-full p-2">
-          <img
-            src={img4}
-            alt="Sand Sculpture"
-            className="w-full h-auto rounded-lg shadow-md"
-          />
-        </div>
-        
+
+      {/* Image 2 */}
+      <div className="w-full md:w-[48%] lg:w-[32%] p-2">
+        <img
+          src={img2}
+          alt="Historical Election Map"
+          className="w-full h-auto rounded-lg shadow-md lg:h-96"
+        />
       </div>
-      <div>
-      <div className="w-full p-2">
-          <img
-            src={img3}
-            alt="People Forming Vote"
-            className="w-full h-auto rounded-lg shadow-md"
-          />
-        </div>
-        <div className="w-full p-2">
-          <img
-            src={img5}
-            alt="Person Carrying Election Materials"
-            className="w-full h-auto rounded-lg shadow-md"
-          />
-        </div>
+
+      {/* Image 3 */}
+      <div className="w-full md:w-[48%] lg:w-[32%] p-2">
+        <img
+          src={img3}
+          alt="People Forming Vote"
+          className="w-full h-auto rounded-lg shadow-md"
+        />
+      </div>
+
+      {/* Image 4 */}
+      <div className="w-full md:w-[48%] lg:w-[32%] p-2">
+        <img
+          src={img4}
+          alt="Sand Sculpture"
+          className="w-full h-auto rounded-lg shadow-md"
+        />
+      </div>
+
+      {/* Image 5 */}
+      <div className="w-full md:w-[48%] lg:w-[32%] p-2 lg:ml-[450px]">
+        <img
+          src={img5}
+          alt="Person Carrying Election Materials"
+          className="w-full h-auto rounded-lg shadow-md lg:h-72"
+        />
       </div>
     </div>
   );

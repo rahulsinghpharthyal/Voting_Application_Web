@@ -7,7 +7,7 @@ const Candidates = () => {
     const {data : candidates, isError, isLoading} = useGetCandidateQuery();
     
   return (
-    <div className="p-6 bg-[#22c55e47] h-screen">
+    <div className="p-2 bg-gray-200">
       <VoterViewCandidates candidates={candidates?.Data || []} />
     </div>
   );

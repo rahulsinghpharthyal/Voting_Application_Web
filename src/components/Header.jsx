@@ -18,100 +18,89 @@ import { useLogOutMutation } from "../features/auth/authApiSlice";
 import { toast } from "react-toastify";
 
 const Header = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const dispatch = useDispatch();
   const user = useSelector(selectCurrentUser);
-  const [logOutUser, {isError, isLoading, isSuccess, error, data}] = useLogOutMutation();
-
+  const [logOutUser] = useLogOutMutation();
 
   const handleLogout = async () => {
     const logOutData = await logOutUser();
-    console.log('this is logOutData', logOutData)
-    toast.success(logOutData?.data?.message)
+    toast.success(logOutData?.data?.message);
     dispatch(logOut());
   };
 
   return (
-    <header className="fixed top-0 w-full bg-blue-900 text-white flex items-center justify-between p-2 z-10">
+    <header className="fixed top-0 w-full bg-blue-900 text-white flex items-center justify-between px-4 py-2 z-10 shadow-md">
       <div className="flex items-center space-x-4">
-        <button
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-          className="text-white ml-12 flex flex-row items-center space-x-2"
-        >
-          <i className="fas fa-bars hover:bg-[#222222] rounded-full p-2 text-lg">
-            <GiHamburgerMenu />
-          </i>
-          <span>Menu</span>
+        {/* Hamburger Menu */}
+        <button className="text-white flex items-center space-x-2">
+          <GiHamburgerMenu
+            className="text-xl"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+          />
         </button>
+        {/* Home Button */}
       </div>
       <div className="flex items-center space-x-4">
-        <Link to="/" className="text-white">
-          <i className="fas fa-home">
-            <IoMdHome />
-          </i>
-        </Link>
-        <span>|</span>
-        <i className="fas fa-home">
-          <IoIosCall />
-        </i>
-        <span>Toll Free - 1950</span>
-        <span>|</span>
-        <div className="flex space-x-2">
-          <Link to="#" className="text-white">
-            <IoLogoFacebook />
-            <i className="fab fa-facebook-f"></i>
-          </Link>
-          <Link to="#" className="text-white">
-            <IoLogoInstagram />
-            <i className="fab fa-instagram"></i>
-          </Link>
-          <Link to="#" className="text-white">
-            <FaXTwitter />
-            <i className="fab fa-twitter"></i>
-          </Link>
-          <Link to="#" className="text-white">
-            <IoLogoYoutube />
-            <i className="fab fa-youtube"></i>
-          </Link>
+        {/* Contact and Social Links */}
+        <div className="hidden lg:flex items-center space-x-4">
+          <div className="flex items-center space-x-2">
+            <Link to="/" className="text-white">
+              <IoMdHome className="text-xl" />
+            </Link>
+          </div>
+          <div className="flex items-center space-x-2">
+            <IoIosCall className="text-xl" />
+            <span className="text-sm">Toll Free - 1950</span>
+          </div>
+          <div className="flex space-x-2">
+            <Link to="#" className="text-white">
+              <IoLogoFacebook className="text-xl" />
+            </Link>
+            <Link to="#" className="text-white">
+              <IoLogoInstagram className="text-xl" />
+            </Link>
+            <Link to="#" className="text-white">
+              <FaXTwitter className="text-xl" />
+            </Link>
+            <Link to="#" className="text-white">
+              <IoLogoYoutube className="text-xl" />
+            </Link>
+          </div>
         </div>
-        <span>|</span>
-        <Link to="#" className="text-white">
-          Screen Reader Access
-        </Link>
-        <span>|</span>
-        <Link to="#" className="text-white">
-          Skip to Main Content
-        </Link>
-        <span>|</span>{" "}
+        {/* User Actions */}
         {user ? (
-          <>
-            <div className="flex items-center space-x-3">
-              <Link to="#">
-                <i className="fas fa-user" title="profile">
-                  <FiUser />
-                </i>
-              </Link>
-              <button
-                onClick={handleLogout}
-                className="bg-white text-blue-900 px-2 py-1"
-              >
-                Logout
-              </button>
-            </div>
-          </>
+          <div className="flex items-center space-x-3">
+            <Link to="#" title="Profile">
+              <FiUser className="text-2xl" />
+            </Link>
+            <button
+              onClick={handleLogout}
+              className="bg-white text-blue-900 px-2 py-1 rounded-md"
+            >
+              Logout
+            </button>
+          </div>
         ) : (
-          <>
-            <Link to="/login" className="bg-white text-blue-900 px-2 py-1">
+          <div className="flex space-x-2">
+            <Link
+              to="/login"
+              className="bg-white text-blue-900 px-2 py-1 rounded-md"
+            >
               Login
             </Link>
-            <Link to="/signup" className="bg-white text-blue-900 px-2 py-1">
+            <Link
+              to="/signup"
+              className="bg-white text-blue-900 px-2 py-1 rounded-md"
+            >
               Sign Up
             </Link>
-          </>
+          </div>
         )}
       </div>
+      {/* Full Screen Menu for Small Devices */}
       {isMenuOpen && (
-        <FullScreenMenu isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen}/>
+        <FullScreenMenu isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
       )}
     </header>
   );

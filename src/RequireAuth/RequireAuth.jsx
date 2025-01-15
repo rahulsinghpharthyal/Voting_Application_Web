@@ -18,15 +18,8 @@ const RequireAuth = ({ allowedRole }) => {
 
   const user = useSelector(selectCurrentUser);
 
-  console.log("this is user", user);
-  console.log("this is token", token);
-
   // Use query hook to authenticate
   const { data, isSuccess, isError, error } = useAuthenticateQuery();
-  console.log("data from requireAuth ", data);
-  console.log("this is error", error);
-  console.log("this is isError", isError);
-  console.log("this is isSuccess", isSuccess);
 
   useEffect(() => {
     let isMounted = true;
@@ -60,6 +53,7 @@ const RequireAuth = ({ allowedRole }) => {
     return <p>Loading , please wait...</p>;
   }
 
+  //Its my approch:-
   // if (user?.role) {
   //   if (allowedRole.includes(user?.role)) {
   //     return <Outlet />; // Allow access to the protected route
@@ -81,7 +75,7 @@ const RequireAuth = ({ allowedRole }) => {
   return allowedRole?.includes(user?.role) ? (
     <Outlet />
   ) : user?._id ? (
-    <h1>Unauthorised</h1>
+    <Navigate to="/not-authorized" state={{ from: location }} replace />
   ) : (
     <Navigate to="/login" state={{ from: location }} replace />
   );

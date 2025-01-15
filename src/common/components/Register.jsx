@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useRef, useState, useTransition } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 import { useRegisterUserMutation } from "../../features/auth/authApiSlice";
 import { toast } from "react-toastify";
@@ -11,9 +11,13 @@ const Register = () => {
     confirmPassword: "",
   });
 
+  const recaptchaRef = useRef();
+
+  const [isPending, startTransition] = useTransition();
   const [errors, setErrors] = useState({});
-  // const [verified, setVerified] = useState(false);
-  const [registerUser, { isLoading, isError, error, isSuccess, data }] =  useRegisterUserMutation();
+  const [verified, setVerified] = useState(false);
+  const [registerUser, { isLoading, isError, error, isSuccess, data }] =
+    useRegisterUserMutation();
   const navigate = useNavigate();
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -36,32 +40,41 @@ const Register = () => {
       validationErrors.confirmPassword = "Passwords do not match";
     }
 
-    // if (!verified) {
-    //   console.log("Please verify the CAPTCHA");
-    //   validationErrors.recaptcha = "Please Verify the Captcha";
-    // }
+    if (!verified) {
+      console.log("Please verify the CAPTCHA");
+      validationErrors.recaptcha = "Please Verify the Captcha";
+    }
 
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
       return;
     }
-    registerUser(formData);
+
+    startTransition(async () => {
+      const recaptchaToken = recaptchaRef.current.getValue();
+      const formDataWithRecaptcha = { ...formData, recaptchaToken };
+      const data = await registerUser(formDataWithRecaptcha);
+      if (data?.data?.success) {
+        toast.success(data?.data?.message);
+        setFormData({
+          email: "",
+          password: "",
+          confirmPassword: "",
+        });
+        navigate("/login");
+      }
+      if (data?.error) {
+        toast.error(data?.error?.data?.message);
+        recaptchaRef.current.reset()
+        setVerified(false);
+      }
+    });
   };
 
-  // const onChange = (value) => {
-  //   console.log("Captcha value:", value);
-  //   setVerified(true);
-  // };
-
-  useEffect(() => {
-    if (isError && error) {
-      toast.error(error.data?.message || "An error occurred");
-    }
-    if (isSuccess && data) {
-      toast.success(data?.message || "Registration successful!");
-      navigate('/login');
-    }
-  }, [isError, isSuccess, error]);
+  const onChange = (value) => {
+    console.log("Captcha value:", value);
+    setVerified(true);
+  };
 
   return (
     <div className="w-full max-w-md p-6 bg-gray-100 shadow-md rounded-md text-black border border-gray-400">
@@ -126,17 +139,24 @@ const Register = () => {
           )}
         </div>
         <div className="mb-4 flex flex-col items-start">
-          {/* <ReCAPTCHA
-            sitekey="6Lcg-qsqAAAAAFnSuLxrec8J4UxSkZ1ibuf734e0"
+          <ReCAPTCHA
+            ref={recaptchaRef}
+            sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY}
             onChange={onChange}
-          /> */}
-          {/* {errors.recaptcha && (
+            onExpired={() => {
+              recaptchaRef.current.reset();
+              setVerified(false);
+              alert("reCAPTCHA expired. Please complete it again.");
+            }}
+          />
+          {errors.recaptcha && (
             <span className="text-red-500">{errors.recaptcha}</span>
-          )} */}
+          )}
         </div>
         <button
           type="submit"
           className="w-full py-2 px-4 bg-blue-500 text-white rounded-md"
+          disabled={!verified}
         >
           Register
         </button>
