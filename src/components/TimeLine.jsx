@@ -35,7 +35,7 @@ const TimeLine = () => {
   return (
     <div className="py-10 px-4 sm:px-6 lg:px-10">
       {/* Flex container for horizontal scrolling */}
-      <div className="flex justify-center lg:justify-start overflow-x-auto max-w-full lg:overflow-hidden">
+      <div className="flex justify-start overflow-x-auto max-w-full lg:overflow-hidden">
         <div className="flex gap-10 lg:gap-24">
           {categories.map((category) => (
             <Link
